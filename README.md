@@ -7,20 +7,22 @@ $c\,(a^\top x)^2$. A layer that sums $m$ bilinear producers,
 $f(x)=\sum_j d_j(g_j^\top x)(u_j^\top x)$, is the quadratic form of the symmetric matrix
 $M=\tfrac12\sum_j d_j(g_ju_j^\top+u_jg_j^\top)$.
 
-Every statement is labelled **[L]**: proved by the Lean kernel with no `sorry`, no warnings, and
+Every statement is proved by the Lean kernel with no `sorry`, no warnings, and
 only the standard axioms `propext`, `Classical.choice` and `Quot.sound`. All of them are in
 [`QuadraticProducerRank.lean`](QuadraticProducerRank.lean).
 
-| Statement | Lean name |
-|-----------|-----------|
-| A symmetric matrix whose quadratic form vanishes identically is zero (polarization) | `eq_zero_of_quadratic_eq_zero` |
-| The quadratic form of $A\,\mathrm{diag}(c)\,A^\top$ is $\sum_k c_k(a_k^\top x)^2$ | `quadratic_of_factored` |
-| **Lower bound.** If $x^\top Mx=\sum_{k<r}c_k(a_k^\top x)^2$ for all $x$, then $M=A\,\mathrm{diag}(c)\,A^\top$ and $\operatorname{rank}M\le r$. No rewriting of the layer with fewer than $\operatorname{rank}M$ square producers exists | `rank_le_of_squares` |
-| **Two squares per bilinear producer**: $(g^\top x)(u^\top x)=\tfrac14((g+u)^\top x)^2-\tfrac14((g-u)^\top x)^2$, so $2m$ squares always suffice | `bilinear_eq_squares` |
-| **Joint elimination beats the producer count**: $(x_0+x_1)x_0+(-x_1)x_0=x_0^2$, one product instead of two | `joint_elimination_example` |
-| **Refutation**: $x_0^2+x_1^2$ is not a single square $c(a^\top x)^2$ (its matrix has rank 2) | `no_single_square` |
-| **Upper bound (spectral theorem)**: a real symmetric $M$ is a sum of exactly $\operatorname{rank}M$ weighted squares | `exists_rank_squares` |
-| **Exact producer count**: the minimal number of weighted squares realizing $x^\top Mx$ is $\operatorname{rank}M$ | `min_squares_eq_rank` |
+**Classes.** `[L]`: new statement or construction, proved in Lean. `[L-known]`: Lean formalization of a known result. `refuted`: constructive counterexample in Lean. `example`: an instance that shows a phenomenon. All of them are kernel-checked: no `sorry`, no warnings, axioms within `propext`, `Classical.choice`, `Quot.sound`.
+
+| Class | Statement | Lean name |
+|-------|-----------|-----------|
+| `[L-known]` | A symmetric matrix whose quadratic form vanishes identically is zero (polarization) | `eq_zero_of_quadratic_eq_zero` |
+| `[L-known]` | The quadratic form of $A\,\mathrm{diag}(c)\,A^\top$ is $\sum_k c_k(a_k^\top x)^2$ | `quadratic_of_factored` |
+| `[L-known]` | **Lower bound.** If $x^\top Mx=\sum_{k<r}c_k(a_k^\top x)^2$ for all $x$, then $M=A\,\mathrm{diag}(c)\,A^\top$ and $\operatorname{rank}M\le r$. No rewriting of the layer with fewer than $\operatorname{rank}M$ square producers exists | `rank_le_of_squares` |
+| `[L-known]` | **Two squares per bilinear producer**: $(g^\top x)(u^\top x)=\tfrac14((g+u)^\top x)^2-\tfrac14((g-u)^\top x)^2$, so $2m$ squares always suffice | `bilinear_eq_squares` |
+| `example` | **Joint elimination beats the producer count**: $(x_0+x_1)x_0+(-x_1)x_0=x_0^2$, one product instead of two | `joint_elimination_example` |
+| `refuted` | **Refutation**: $x_0^2+x_1^2$ is not a single square $c(a^\top x)^2$ (its matrix has rank 2) | `no_single_square` |
+| `[L-known]` | **Upper bound (spectral theorem)**: a real symmetric $M$ is a sum of exactly $\operatorname{rank}M$ weighted squares | `exists_rank_squares` |
+| `[L-known]` | **Exact producer count**: the minimal number of weighted squares realizing $x^\top Mx$ is $\operatorname{rank}M$ | `min_squares_eq_rank` |
 
 ## Why it matters
 
