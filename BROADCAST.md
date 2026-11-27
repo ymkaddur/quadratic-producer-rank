@@ -1,0 +1,5 @@
+# Decoding from linear broadcasts
+
+An arbitrary decoder recovers demanded linear functions D from prior readings L and the common message space B exactly when D is contained in L+B. If the inclusion fails, the annihilator gives two indistinguishable inputs. For a common prior L, the minimum broadcast dimension is dim(L+sum Dᵢ) − dim L. For two nested priors the module also constructs an optimal relative complement. The signature count is the cardinality of the image of the query map.
+
+The binary examples separate separate transmissions, shared scalar broadcasts and coding across two instances. With three receivers requesting their own distinct bits, exhaustive subspace search over all 64 directed side-information graphs gives optimal dimensions 3, 2 and 1 on 25, 38 and 1 graphs, respectively. See `scripts/broadcast_codes.py` and the fully quantified statements in `LinearBroadcast.lean`. Prior readings must already be resident or charged separately. Background on coded side information is available in [Lee, Dimakis and Heath](https://arxiv.org/abs/1501.00077).
