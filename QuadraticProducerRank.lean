@@ -109,4 +109,47 @@ theorem no_single_square :
   rw [rank_one, Fintype.card_fin] at hr
   omega
 
+
+/-- **[L] Upper bound (spectral theorem)**: a real symmetric `M` is a sum of exactly
+`rank M` weighted squares. -/
+theorem exists_rank_squares (M : Matrix (Fin n) (Fin n) ℝ) (hM : M.IsHermitian) :
+    ∃ (a : Fin M.rank → Fin n → ℝ) (c : Fin M.rank → ℝ),
+      ∀ x, x ⬝ᵥ (M *ᵥ x) = ∑ k, c k * (a k ⬝ᵥ x) ^ 2 := by
+  set U : Matrix (Fin n) (Fin n) ℝ := (hM.eigenvectorUnitary : Matrix (Fin n) (Fin n) ℝ)
+  set l := hM.eigenvalues
+  have hspec : M = cols (fun i j => U j i) * diagonal l * (cols (fun i j => U j i))ᵀ := by
+    have h := hM.spectral_theorem
+    have hU : cols (fun i j => U j i) = U := by ext j i; rfl
+    rw [hU]
+    conv_lhs => rw [h]
+    simp [U, l, Matrix.star_eq_conjTranspose]
+  have hfull : ∀ x, x ⬝ᵥ (M *ᵥ x) = ∑ i, l i * ((fun i j => U j i) i ⬝ᵥ x) ^ 2 := by
+    intro x
+    conv_lhs => rw [hspec]
+    exact quadratic_of_factored _ _ x
+  have hcard : Fintype.card {i // l i ≠ 0} = M.rank := (hM.rank_eq_card_non_zero_eigs).symm
+  let e : {i // l i ≠ 0} ≃ Fin M.rank := (Fintype.equivFin _).trans (finCongr hcard)
+  refine ⟨fun k => fun j => U j (e.symm k), fun k => l (e.symm k), fun x => ?_⟩
+  rw [hfull x]
+  have hdrop : ∑ i, l i * ((fun i j => U j i) i ⬝ᵥ x) ^ 2 =
+      ∑ i : {i // l i ≠ 0}, l i * ((fun i j => U j i) i ⬝ᵥ x) ^ 2 := by
+    rw [← Finset.sum_filter_of_ne (p := fun i => l i ≠ 0)
+      (fun i _ h => fun h0 => h (by rw [h0, zero_mul]))]
+    exact Finset.sum_subtype _ (by simp) _
+  rw [hdrop]
+  exact (e.symm.sum_comp (fun i : {i // l i ≠ 0} => l i * ((fun i j => U j i) i ⬝ᵥ x) ^ 2)).symm
+
+/-- **[L] Exact producer count**: the minimal number of weighted squares realizing the quadratic
+form of a real symmetric `M` is `rank M`. -/
+theorem min_squares_eq_rank (M : Matrix (Fin n) (Fin n) ℝ) (hM : M.IsHermitian) :
+    (∃ (a : Fin M.rank → Fin n → ℝ) (c : Fin M.rank → ℝ),
+      ∀ x, x ⬝ᵥ (M *ᵥ x) = ∑ k, c k * (a k ⬝ᵥ x) ^ 2) ∧
+    ∀ (r : ℕ) (a : Fin r → Fin n → ℝ) (c : Fin r → ℝ),
+      (∀ x, x ⬝ᵥ (M *ᵥ x) = ∑ k, c k * (a k ⬝ᵥ x) ^ 2) → M.rank ≤ r := by
+  refine ⟨exists_rank_squares M hM, fun r a c h => (rank_le_of_squares M ?_ a c h).2⟩
+  have h := hM.eq
+  ext i j
+  have := congrFun (congrFun h i) j
+  simpa [conjTranspose_apply, transpose_apply] using this
+
 end QuadraticProducerRank

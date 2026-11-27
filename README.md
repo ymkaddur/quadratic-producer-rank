@@ -27,9 +27,6 @@ law**, not the number of producers it is written with. Rank is a certified floor
 rewriting can go below, and when the joint rank is below $m$, producers can be eliminated
 outright.
 
-Open (not formalized here): the matching upper bound by the spectral theorem ($\operatorname{rank}M$
-squares always suffice over $\mathbb R$).
-
 ## Verify
 
 ```bash
