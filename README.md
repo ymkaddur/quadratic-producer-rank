@@ -24,6 +24,18 @@ only the standard axioms `propext`, `Classical.choice` and `Quot.sound`. All of 
 | `[L-known]` | **Upper bound (spectral theorem)**: a real symmetric $M$ is a sum of exactly $\operatorname{rank}M$ weighted squares | `exists_rank_squares` |
 | `[L-known]` | **Exact producer count**: the minimal number of weighted squares realizing $x^\top Mx$ is $\operatorname{rank}M$ | `min_squares_eq_rank` |
 
+## Producers shared by several protected readers ([`SharedProducers.lean`](SharedProducers.lean))
+
+A layer read by several protected readers $\ell$ has one joint law per reader, $x\mapsto x^\top M_\ell x$.
+A shared realization uses one family of linear forms $a_1,\dots,a_s$ with weights per reader:
+$x^\top M_\ell x=\sum_kc_{\ell k}(a_k^\top x)^2$.
+
+| Class | Statement | Scope | Lean name |
+|-------|-----------|-------|-----------|
+| `[L]` | **Span lower bound**: every shared realization has $s\ge\dim\operatorname{span}\{M_\ell\}$, and $s\ge\operatorname{rank}M_\ell$ for each reader | Any finite or infinite family of symmetric laws | `shared_lower_bound`, `shared_rank_bound` |
+| `refuted` | **The largest individual rank does not suffice**: $x_0^2$, $x_1^2$ and $(x_0+x_1)^2$ each have rank 1, but no two shared producers realize all three (their span has dimension 3) | Shows the span bound is the binding constraint, not the per-reader rank | `three_laws_need_three` |
+| `[L]` | **Identical readers share everything**: $N$ readers with one law are served by the producers of a single reader | The shared count does not grow with the number of readers | `identical_readers` |
+
 ## Why it matters
 
 The quantity that governs how many products a layer needs is the **rank of its joint quadratic
