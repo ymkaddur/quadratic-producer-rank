@@ -1,6 +1,6 @@
 name = "quadratic_producer_rank"
 version = "0.1.0"
-defaultTargets = ["QuadraticProducerRank", "SharedProducers"]
+defaultTargets = ["QuadraticProducerRank", "SharedProducers", "BinaryPencil"]
 
 [leanOptions]
 autoImplicit = false
@@ -15,3 +15,6 @@ name = "QuadraticProducerRank"
 
 [[lean_lib]]
 name = "SharedProducers"
+
+[[lean_lib]]
+name = "BinaryPencil"
