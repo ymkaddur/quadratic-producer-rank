@@ -19,13 +19,16 @@ only the standard axioms `propext`, `Classical.choice` and `Quot.sound`. All of 
 | **Two squares per bilinear producer**: $(g^\top x)(u^\top x)=\tfrac14((g+u)^\top x)^2-\tfrac14((g-u)^\top x)^2$, so $2m$ squares always suffice | `bilinear_eq_squares` |
 | **Joint elimination beats the producer count**: $(x_0+x_1)x_0+(-x_1)x_0=x_0^2$, one product instead of two | `joint_elimination_example` |
 | **Refutation**: $x_0^2+x_1^2$ is not a single square $c(a^\top x)^2$ (its matrix has rank 2) | `no_single_square` |
+| **Upper bound (spectral theorem)**: a real symmetric $M$ is a sum of exactly $\operatorname{rank}M$ weighted squares | `exists_rank_squares` |
+| **Exact producer count**: the minimal number of weighted squares realizing $x^\top Mx$ is $\operatorname{rank}M$ | `min_squares_eq_rank` |
 
 ## Why it matters
 
 The quantity that governs how many products a layer needs is the **rank of its joint quadratic
 law**, not the number of producers it is written with. Rank is a certified floor that no
 rewriting can go below, and when the joint rank is below $m$, producers can be eliminated
-outright.
+outright. The floor is exact: $\operatorname{rank}M$ squares always suffice
+(`min_squares_eq_rank`).
 
 ## Verify
 
